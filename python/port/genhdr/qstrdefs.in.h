@@ -24,6 +24,7 @@ Q(draw_string)
 Q(fill_rect)
 Q(get_pixel)
 Q(set_pixel)
+Q(wait_vblank)
 
 // Turtle QSTRs
 
