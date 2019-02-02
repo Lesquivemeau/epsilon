@@ -92,3 +92,79 @@ mp_obj_t modkandinsky_wait_vblank() {
   Ion::Display::waitForVBlank();
   return mp_const_none;
 }
+
+struct key2mp
+{
+    Ion::Keyboard::Key key;
+    mp_obj_t string;
+};
+
+key2mp keyMapping[] =
+{
+    { Ion::Keyboard::Key::A1, MP_ROM_QSTR(MP_QSTR_left) },
+    { Ion::Keyboard::Key::A2, MP_ROM_QSTR(MP_QSTR_up) },
+    { Ion::Keyboard::Key::A3, MP_ROM_QSTR(MP_QSTR_down) },
+    { Ion::Keyboard::Key::A4, MP_ROM_QSTR(MP_QSTR_right) },
+    { Ion::Keyboard::Key::A5, MP_ROM_QSTR(MP_QSTR_OK) },
+    { Ion::Keyboard::Key::A6, MP_ROM_QSTR(MP_QSTR_back) },
+
+    { Ion::Keyboard::Key::C1, MP_ROM_QSTR(MP_QSTR_shift) },
+    { Ion::Keyboard::Key::C2, MP_ROM_QSTR(MP_QSTR_alpha) },
+    { Ion::Keyboard::Key::C3, MP_ROM_QSTR(MP_QSTR_xnt) },
+    { Ion::Keyboard::Key::C4, MP_ROM_QSTR(MP_QSTR_var) },
+    { Ion::Keyboard::Key::C5, MP_ROM_QSTR(MP_QSTR_toolbox) },
+    { Ion::Keyboard::Key::C6, MP_ROM_QSTR(MP_QSTR_backspace) },
+
+    { Ion::Keyboard::Key::D1, MP_ROM_QSTR(MP_QSTR_exp) },
+    { Ion::Keyboard::Key::D2, MP_ROM_QSTR(MP_QSTR_ln) },
+    { Ion::Keyboard::Key::D3, MP_ROM_QSTR(MP_QSTR_log) },
+    { Ion::Keyboard::Key::D4, MP_ROM_QSTR(MP_QSTR_imaginary) },
+    { Ion::Keyboard::Key::D5, MP_ROM_QSTR(MP_QSTR_toolbox) },
+    { Ion::Keyboard::Key::D6, MP_ROM_QSTR(MP_QSTR_backspace) },
+
+    { Ion::Keyboard::Key::E1, MP_ROM_QSTR(MP_QSTR_sin) },
+    { Ion::Keyboard::Key::E2, MP_ROM_QSTR(MP_QSTR_cos) },
+    { Ion::Keyboard::Key::E3, MP_ROM_QSTR(MP_QSTR_tan) },
+    { Ion::Keyboard::Key::E4, MP_ROM_QSTR(MP_QSTR_pi) },
+    { Ion::Keyboard::Key::E5, MP_ROM_QSTR(MP_QSTR_sqrt) },
+    { Ion::Keyboard::Key::E6, MP_ROM_QSTR(MP_QSTR_square) },
+
+    { Ion::Keyboard::Key::F1, MP_ROM_QSTR(MP_QSTR_7) },
+    { Ion::Keyboard::Key::F2, MP_ROM_QSTR(MP_QSTR_8) },
+    { Ion::Keyboard::Key::F3, MP_ROM_QSTR(MP_QSTR_9) },
+    { Ion::Keyboard::Key::F4, MP_ROM_QSTR(MP_QSTR__paren_open_) },
+    { Ion::Keyboard::Key::F5, MP_ROM_QSTR(MP_QSTR__paren_close_) },
+
+    { Ion::Keyboard::Key::G1, MP_ROM_QSTR(MP_QSTR_4) },
+    { Ion::Keyboard::Key::G2, MP_ROM_QSTR(MP_QSTR_5) },
+    { Ion::Keyboard::Key::G3, MP_ROM_QSTR(MP_QSTR_6) },
+    { Ion::Keyboard::Key::G4, MP_ROM_QSTR(MP_QSTR__star_) },
+    { Ion::Keyboard::Key::G5, MP_ROM_QSTR(MP_QSTR__slash_) },
+
+    { Ion::Keyboard::Key::H1, MP_ROM_QSTR(MP_QSTR_1) },
+    { Ion::Keyboard::Key::H2, MP_ROM_QSTR(MP_QSTR_2) },
+    { Ion::Keyboard::Key::H3, MP_ROM_QSTR(MP_QSTR_3) },
+    { Ion::Keyboard::Key::H4, MP_ROM_QSTR(MP_QSTR__plus_) },
+    { Ion::Keyboard::Key::H5, MP_ROM_QSTR(MP_QSTR__hyphen_) },
+
+    { Ion::Keyboard::Key::I1, MP_ROM_QSTR(MP_QSTR_0) },
+    { Ion::Keyboard::Key::I2, MP_ROM_QSTR(MP_QSTR__dot_) },
+    { Ion::Keyboard::Key::I3, MP_ROM_QSTR(MP_QSTR_EE) },
+    { Ion::Keyboard::Key::I4, MP_ROM_QSTR(MP_QSTR_Ans) },
+    { Ion::Keyboard::Key::I5, MP_ROM_QSTR(MP_QSTR_EXE) },
+};
+
+mp_obj_t modkandinsky_get_keys() {
+  micropython_port_interrupt_if_needed();
+
+  Ion::Keyboard::State keys = Ion::Keyboard::scan();
+  mp_obj_t result = mp_obj_new_set(0, nullptr);
+
+  for (unsigned i = 0; i < sizeof(keyMapping)/sizeof(key2mp); i++) {
+      if (keys.keyDown(keyMapping[i].key)) {
+          mp_obj_set_store(result, keyMapping[i].string);
+      }
+  }
+
+  return result;
+}
