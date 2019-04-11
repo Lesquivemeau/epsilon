@@ -5,8 +5,8 @@
 
 class Palette {
 public:
-  constexpr static KDColor YellowDark = KDColor::RGB24(0xffb734);
-  constexpr static KDColor YellowLight = KDColor::RGB24(0xffcc7b);
+  constexpr static KDColor YellowDark = KDColor::RGB24(0x34be5b);
+  constexpr static KDColor YellowLight = KDColor::RGB24(0x35aa56);
   constexpr static KDColor PurpleBright = KDColor::RGB24(0x656975);
   constexpr static KDColor PurpleDark = KDColor::RGB24(0x414147);
   constexpr static KDColor GreyWhite = KDColor::RGB24(0xf5f5f5);
@@ -30,8 +30,6 @@ public:
   constexpr static KDColor Orange = KDColor::RGB24(0xfe871f);
   constexpr static KDColor Green = KDColor::RGB24(0x50c102);
   constexpr static KDColor GreenLight = KDColor::RGB24(0x52db8f);
-  constexpr static KDColor Brown = KDColor::RGB24(0x8d7350);
-  constexpr static KDColor Purple = KDColor::RGB24(0x6e2d79);
   constexpr static KDColor DataColor[] = {Red, Blue, Green, YellowDark, Magenta, Turquoise, Pink, Orange};
   constexpr static KDColor DataColorLight[] = {RedLight, BlueLight, GreenLight, YellowLight};
 };
